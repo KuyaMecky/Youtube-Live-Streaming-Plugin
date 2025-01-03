@@ -27,7 +27,7 @@ function yt_live_broadcasts_options_page() {
         <?php settings_fields('yt_live_broadcasts_options_group'); ?>
         <table>
             <tr valign="top">
-                <th scope="row"><label for="yt_live_broadcasts_api_key">API Key</label></th>
+                <th scope="row"><label for="yt_live_broadcasts_api_key">API Key (YouTube Data API v3)</label></th>
                 <td><input type="text" id="yt_live_broadcasts_api_key" name="yt_live_broadcasts_api_key" value="<?php echo get_option('yt_live_broadcasts_api_key'); ?>" /></td>
             </tr>
             <tr valign="top">
@@ -67,6 +67,8 @@ function fetch_youtube_live_broadcasts() {
 function display_youtube_live_broadcasts($atts) {
     return fetch_youtube_live_broadcasts();
 }
+
+
 // Shortcode: [youtube_live]
 add_shortcode('youtube_live', 'display_youtube_live_broadcasts');
 
