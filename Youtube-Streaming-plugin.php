@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: YouTube Live Broadcasts
-Description: Automatically fetch and display live broadcasts from a YouTube channel.
-Version: 1.2
+Description: Automatically fetch and display the latest live broadcast from a YouTube channel.
+Version: 1.3
 Author: Michael Tallada
 */
 
@@ -58,13 +58,10 @@ function fetch_youtube_live_broadcasts() {
         return 'No live broadcasts found.';
     }
 
-    $output = array_map(function($item) {
-        $video_id = $item['id']['videoId'];
-        $title = $item['snippet']['title'];
-        return "<h3>{$title}</h3><iframe width='560' height='315' src='https://www.youtube.com/embed/{$video_id}' frameborder='0' allowfullscreen></iframe>";
-    }, $data['items']);
-
-    return implode('', $output);
+    $item = $data['items'][0];
+    $video_id = $item['id']['videoId'];
+    $title = $item['snippet']['title'];
+    return "<h3>{$title}</h3><iframe width='560' height='315' src='https://www.youtube.com/embed/{$video_id}' frameborder='0' allowfullscreen></iframe>";
 }
 
 function display_youtube_live_broadcasts($atts) {
@@ -83,6 +80,24 @@ function yt_live_broadcasts_dashboard_page() {
     <div class="wrap">
         <h1>YouTube Live Broadcasts Dashboard</h1>
         <div>
+            <h2>Settings</h2>
+            <form method="post" action="options.php">
+                <?php settings_fields('yt_live_broadcasts_options_group'); ?>
+                <table>
+                    <tr valign="top">
+                        <th scope="row"><label for="yt_live_broadcasts_api_key">API Key</label></th>
+                        <td><input type="text" id="yt_live_broadcasts_api_key" name="yt_live_broadcasts_api_key" value="<?php echo get_option('yt_live_broadcasts_api_key'); ?>" /></td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row"><label for="yt_live_broadcasts_channel_id">Channel ID</label></th>
+                        <td><input type="text" id="yt_live_broadcasts_channel_id" name="yt_live_broadcasts_channel_id" value="<?php echo get_option('yt_live_broadcasts_channel_id'); ?>" /></td>
+                    </tr>
+                </table>
+                <?php submit_button(); ?>
+            </form>
+        </div>
+        <div>
+            <h2>Live Broadcasts</h2>
             <?php echo fetch_youtube_live_broadcasts(); ?>
         </div>
     </div>
