@@ -2,7 +2,7 @@
 /*
 Plugin Name: YouTube Live Broadcasts
 Description: Automatically fetch and display live broadcasts from a YouTube channel.
-Version: 1.1
+Version: 1.2
 Author: Michael Tallada
 */
 
@@ -70,5 +70,22 @@ function fetch_youtube_live_broadcasts() {
 function display_youtube_live_broadcasts($atts) {
     return fetch_youtube_live_broadcasts();
 }
+// Shortcode: [youtube_live]
 add_shortcode('youtube_live', 'display_youtube_live_broadcasts');
+
+function yt_live_broadcasts_admin_menu() {
+    add_menu_page('YouTube Live Broadcasts', 'YouTube Live Broadcasts', 'manage_options', 'yt_live_broadcasts_dashboard', 'yt_live_broadcasts_dashboard_page', 'dashicons-video-alt3', 6);
+}
+add_action('admin_menu', 'yt_live_broadcasts_admin_menu');
+
+function yt_live_broadcasts_dashboard_page() {
+?>
+    <div class="wrap">
+        <h1>YouTube Live Broadcasts Dashboard</h1>
+        <div>
+            <?php echo fetch_youtube_live_broadcasts(); ?>
+        </div>
+    </div>
+<?php
+}
 ?>
