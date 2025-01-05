@@ -3,7 +3,12 @@
 Plugin Name: YouTube Live Broadcasts
 Description: Automatically fetch and display the latest live broadcast from a YouTube channel.
 Version: 1.3
-Author: Michael Tallad
+Author: Michael Tallada
+Author URI: https://github.com/KuyaMecky
+License: GPL2
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: yt-live-broadcasts
+Domain Path: /languages
 */
 
 function yt_live_broadcasts_register_settings() {
