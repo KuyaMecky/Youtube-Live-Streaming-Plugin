@@ -48,4 +48,9 @@ To display the latest live broadcast from the specified YouTube channel, use the
 - `[youtube_live]`: Embeds the latest live broadcast from the configured YouTube channel.
 
 ## Example
+use the sample.php for this example
+my api Key:
+AIzaSyDPr9Ni774jBR_-bOqIQp2Z_q2SwH3g1lU
 
+Target channel:
+UCX7bj5Fv2uBpAy1dRC1IhTw
