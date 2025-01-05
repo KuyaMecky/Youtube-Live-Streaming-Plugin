@@ -29,6 +29,7 @@ The YouTube Live Broadcasts plugin automatically fetches and displays the latest
     - Click on the channel name to go to the channel's homepage.
     - The Channel ID is the string of characters after `/channel/` in the URL. For example, in `https://www.youtube.com/channel/UC1234567890`, `UC1234567890` is the Channel ID.
     - Note: The Channel ID is not the same as the custom URL or username (e.g., `@DEARLOTTERIESLIVE`).
+    - You can use this to convert the channel tag into channel ID [UC Converter] `https://www.tunepocket.com/youtube-channel-id-finder/#channle-id-finder-form`
 
 3. **Setup in Plugin**:
     - Navigate to `Settings` > `YouTube Live Broadcasts` in the WordPress admin dashboard.
