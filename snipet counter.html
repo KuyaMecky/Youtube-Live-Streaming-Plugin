@@ -1,0 +1,108 @@
+<style>
+    .clock {
+        position: relative;
+        width: 300px;
+        margin: 5px auto;
+        background-color: #fff;
+        padding: 2px;
+        text-align: center;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    #date {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    
+    #countdown {
+        font-size: 20px;
+        font-weight: normal;
+        color: #666;
+    }
+    </style>
+    
+    <div class="clock">
+        <p id="date"></p>
+        <p id="countdown"></p>
+    </div>
+    
+    <script>
+    // Get elements
+    const dateElement = document.getElementById('date');
+    const countdownElement = document.getElementById('countdown');
+    
+    // Set India's timezone
+    const indiaTimezone = 'Asia/Kolkata';
+    
+    // Lottery draw times
+    const drawTimes = [
+        { hour: 13, minute: 0 }, // 1 PM
+        { hour: 18, minute: 0 }, // 6 PM
+        { hour: 20, minute: 0 }  // 8 PM
+    ];
+    
+    // Update date
+    function updateDate() {
+        const now = new Date();
+        const indiaDate = new Intl.DateTimeFormat('en-US', {
+            timeZone: indiaTimezone,
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+        }).format(now);
+    
+        // Update element
+        dateElement.innerText = indiaDate;
+    }
+    
+    // Get next draw time
+    function getNextDrawTime() {
+        const now = new Date();
+        const indiaNow = new Date(
+            now.toLocaleString('en-US', { timeZone: indiaTimezone })
+        );
+    
+        for (let drawTime of drawTimes) {
+            const nextDraw = new Date(indiaNow);
+            nextDraw.setHours(drawTime.hour, drawTime.minute, 0, 0);
+    
+            if (nextDraw > indiaNow) {
+                return nextDraw;
+            }
+        }
+    
+        // If no future draws today, return the first draw time tomorrow
+        const nextDay = new Date(indiaNow);
+        nextDay.setDate(nextDay.getDate() + 1);
+        nextDay.setHours(drawTimes[0].hour, drawTimes[0].minute, 0, 0);
+        return nextDay;
+    }
+    
+    // Update countdown
+    function updateCountdown() {
+        const now = new Date();
+        const nextDraw = getNextDrawTime();
+        const timeDifference = nextDraw - now;
+    
+        if (timeDifference <= 0) {
+            countdownElement.textContent = "Draw Live Now!";
+            return;
+        }
+    
+        const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+        const seconds = Math.floor((timeDifference / 1000) % 60);
+    
+        countdownElement.textContent = `Next draw in: ${hours}h ${minutes}m ${seconds}s`;
+    }
+    
+    // Initialize updates
+    setInterval(updateCountdown, 1000); // Update the countdown every second
+    updateCountdown(); // Initial countdown update
+    updateDate(); // Initial date update
+    </script>
+    

@@ -14,7 +14,6 @@ The YouTube Live Broadcasts plugin automatically fetches and displays the latest
 3. **Activate**: Enable the plugin via the 'Plugins' menu in WordPress.
 
 ## Configuration
-## Configuration
 
 1. **API Key**: Obtain a YouTube Data API v3 key from the [Google Cloud Console](https://console.cloud.google.com/).
     - Go to the [Google Cloud Console](https://console.cloud.google.com/).
@@ -29,6 +28,7 @@ The YouTube Live Broadcasts plugin automatically fetches and displays the latest
     - Go to the YouTube channel.
     - Click on the channel name to go to the channel's homepage.
     - The Channel ID is the string of characters after `/channel/` in the URL. For example, in `https://www.youtube.com/channel/UC1234567890`, `UC1234567890` is the Channel ID.
+    - Note: The Channel ID is not the same as the custom URL or username (e.g., `@DEARLOTTERIESLIVE`).
 
 3. **Setup in Plugin**:
     - Navigate to `Settings` > `YouTube Live Broadcasts` in the WordPress admin dashboard.
@@ -47,3 +47,4 @@ To display the latest live broadcast from the specified YouTube channel, use the
 - `[youtube_live]`: Embeds the latest live broadcast from the configured YouTube channel.
 
 ## Example
+

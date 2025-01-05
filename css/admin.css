@@ -1,0 +1,93 @@
+/* YouTube Live Broadcasts Admin Styles */
+.yt-live-broadcasts-wrap {
+    padding: 20px;
+    max-width: 1200px;
+}
+
+.yt-live-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.yt-live-header h1 {
+    margin: 0;
+    padding: 0;
+    color: #1d2327;
+}
+
+.yt-live-settings {
+    background: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.yt-live-settings table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.yt-live-settings th {
+    text-align: left;
+    padding: 15px 10px;
+    width: 200px;
+    font-weight: 600;
+}
+
+.yt-live-settings td {
+    padding: 10px;
+}
+
+.yt-live-settings input[type="text"],
+.yt-live-settings select {
+    width: 100%;
+    max-width: 400px;
+}
+
+.yt-live-preview {
+    margin-top: 30px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.yt-live-preview h2 {
+    margin-top: 0;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.yt-live-error {
+    padding: 10px 15px;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    color: #721c24;
+    margin: 10px 0;
+}
+
+.yt-live-notice {
+    padding: 10px 15px;
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 4px;
+    color: #856404;
+    margin: 10px 0;
+}
+
+.yt-live-refresh {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.yt-live-refresh .spinner {
+    float: none;
+    margin: 0;
+}
