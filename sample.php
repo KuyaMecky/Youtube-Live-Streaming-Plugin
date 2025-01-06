@@ -40,38 +40,22 @@ function yt_live_broadcasts_options_page() {
 }
 
 function fetch_youtube_live_broadcasts() {
+    // Check if we're in quota exceeded state
+    $quota_exceeded = get_transient('yt_quota_exceeded');
+    
+    if ($quota_exceeded) {
+        return '<div class="notice-message">YouTube streaming will resume when API quota resets. Please check back later.</div>';
+    }
+    
     $api_key = get_option('yt_live_broadcasts_api_key');
     $channel_id = get_option('yt_live_broadcasts_channel_id');
-    $api_url = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId={$channel_id}&type=video&eventType=live&key={$api_key}";
-
-    $response = wp_remote_get($api_url);
-
-    if (is_wp_error($response)) {
-        return 'Error fetching broadcasts.';
+    
+    if (empty($api_key) || empty($channel_id)) {
+        return '<div class="notice-message">Please configure YouTube API key and Channel ID in the plugin settings.</div>';
     }
 
-    $data = json_decode(wp_remote_retrieve_body($response), true);
-
-    if (empty($data['items'])) {
-        return 'No live broadcasts found.';
-    }
-
-    $item = $data['items'][0];
-    $video_id = $item['id']['videoId'];
-    $title = esc_html($item['snippet']['title']);
-    $description = esc_html($item['snippet']['description']);
-    $thumbnail = esc_url($item['snippet']['thumbnails']['medium']['url']);
-    $published_at = esc_html($item['snippet']['publishedAt']);
-
-    return "
-        <div class='yt-live-broadcast'>
-            <h3>{$title}</h3>
-            <img src='{$thumbnail}' alt='{$title}' />
-            <p>{$description}</p>
-            <p><strong>Live since:</strong> {$published_at}</p>
-            <iframe width='560' height='315' src='https://www.youtube.com/embed/{$video_id}' frameborder='0' allowfullscreen></iframe>
-        </div>
-    ";
+    // Return a simple message without making API call
+    return '<div class="notice-message">Draw results will be shown here during live broadcast.</div>';
 }
 
 function display_youtube_live_broadcasts($atts = []) {
@@ -139,6 +123,35 @@ function display_youtube_live_broadcasts($atts = []) {
             margin-bottom: 10px;
         }
 
+        .notice-message {
+            color: #004085;
+            background-color: #cce5ff;
+            border: 1px solid #b8daff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .draw-time {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+        .countdown-container {
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            }
+            .countdown-item {
+                flex: 1 1 auto;
+                margin: 5px;
+            }
+
+        
     </style>
     
     <div class="clock">
@@ -148,108 +161,79 @@ function display_youtube_live_broadcasts($atts = []) {
     </div>
     
     <script>
-    // Get elements
     const dateElement = document.getElementById('date');
     const countdownElement = document.getElementById('countdown');
-    
-    // Set Indian timezone
-    const indianTimezone = 'Asia/Kolkata';
-    
-    // Lottery draw times
+    const indiaTimezone = 'Asia/Kolkata';
     const drawTimes = [
-        { hour: 13, minute: 0 }, // 1 PM
-        { hour: 18, minute: 0 }, // 6 PM
-        { hour: 20, minute: 0 }  // 8 PM
+        { hour: 13, minute: 0 },
+        { hour: 18, minute: 0 },
+        { hour: 20, minute: 0 }
     ];
-    
-    // Update date
+
     function updateDate() {
         const now = new Date();
-        const indianDate = new Intl.DateTimeFormat('en-US', {
-            timeZone: indianTimezone,
+        const indiaDate = new Intl.DateTimeFormat('en-US', {
+            timeZone: indiaTimezone,
             month: 'long',
             day: 'numeric',
             year: 'numeric'
         }).format(now);
-    
-        // Update element
-        dateElement.innerText = indianDate;
+        dateElement.innerText = indiaDate;
     }
-    
-    // Get next draw time
+
     function getNextDrawTime() {
         const now = new Date();
-        const indianNow = new Date(
-            now.toLocaleString('en-US', { timeZone: indianTimezone })
-        );
-    
+        const indiaNow = new Date(now.toLocaleString('en-US', { timeZone: indiaTimezone }));
         for (let drawTime of drawTimes) {
-            const nextDraw = new Date(indianNow);
+            const nextDraw = new Date(indiaNow);
             nextDraw.setHours(drawTime.hour, drawTime.minute, 0, 0);
-    
-            if (nextDraw > indianNow) {
+            if (nextDraw > indiaNow) {
                 return nextDraw;
             }
         }
-    
-        // If no future draws today, return the first draw time tomorrow
-        const nextDay = new Date(indianNow);
+        const nextDay = new Date(indiaNow);
         nextDay.setDate(nextDay.getDate() + 1);
         nextDay.setHours(drawTimes[0].hour, drawTimes[0].minute, 0, 0);
         return nextDay;
     }
-    
-    // Update countdown
+
     function updateCountdown() {
         const now = new Date();
         const nextDraw = getNextDrawTime();
         const timeDifference = nextDraw - now;
-    
         if (timeDifference <= 0) {
             countdownElement.textContent = "Draw Live Now!";
-            document.getElementById('yt-live-broadcast').style.display = 'block';
             return;
         }
-    
         const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
         const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
         const seconds = Math.floor((timeDifference / 1000) % 60);
-    
         countdownElement.innerHTML = `
             <div class="countdown-container">
-            <div class="countdown-item">
-                <span>${hours}</span>
-                <small>Hours</small>
-            </div>
-            <div class="countdown-item">
-                <span>${minutes}</span>
-                <small>Minutes</small>
-            </div>
-            <div class="countdown-item">
-                <span>${seconds}</span>
-                <small>Seconds</small>
-            </div>
+                <div class="countdown-item"><span>${hours}</span><small>Hours</small></div>
+                <div class="countdown-item"><span>${minutes}</span><small>Minutes</small></div>
+                <div class="countdown-item"><span>${seconds}</span><small>Seconds</small></div>
             </div>
         `;
-        document.getElementById('yt-live-broadcast').style.display = 'none';
     }
-    
-    // Initialize updates
-    setInterval(updateCountdown, 1000); // Update the countdown every second
-    updateCountdown(); // Initial countdown update
-    updateDate(); // Initial date update
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+    updateDate();
 </script>
 
     
-    <div id="yt-live-broadcast" style="display: none;">
+    <div id="yt-live-broadcast">
         <?php echo fetch_youtube_live_broadcasts(); ?>
+    </div>
+
+    <div class="draw-time">
+        Daily Draw Times (IST):<br>
+        1:00 PM | 6:00 PM | 8:00 PM
     </div>
     <?php
     return ob_get_clean();
 }
-
-
-
 // Shortcode: [youtube_live]
 add_shortcode('youtube_live', 'display_youtube_live_broadcasts');
 

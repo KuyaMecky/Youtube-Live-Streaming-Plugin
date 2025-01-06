@@ -54,7 +54,8 @@ AIzaSyDPr9Ni774jBR_-bOqIQp2Z_q2SwH3g1lU
 
 Target channel:
 UCX7bj5Fv2uBpAy1dRC1IhTw
-
+UCpDJl2EmP7Oh90Vylx0dZtA
+UCX7bj5Fv2uBpAy1dRC1IhTw
 
 
 
