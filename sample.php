@@ -4,11 +4,6 @@ Plugin Name: YouTube Live Broadcasts
 Description: Automatically fetch and display the latest live broadcast from a YouTube channel.
 Version: 1.3
 Author: Michael Tallada
-Author URI: https://github.com/KuyaMecky
-License: GPL2
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: yt-live-broadcasts
-Domain Path: /languages
 */
 
 function yt_live_broadcasts_register_settings() {
@@ -157,8 +152,8 @@ function display_youtube_live_broadcasts($atts = []) {
     const dateElement = document.getElementById('date');
     const countdownElement = document.getElementById('countdown');
     
-    // Set India's timezone
-    const indiaTimezone = 'Asia/Kolkata';
+    // Set Indian timezone
+    const indianTimezone = 'Asia/Kolkata';
     
     // Lottery draw times
     const drawTimes = [
@@ -170,35 +165,35 @@ function display_youtube_live_broadcasts($atts = []) {
     // Update date
     function updateDate() {
         const now = new Date();
-        const indiaDate = new Intl.DateTimeFormat('en-US', {
-            timeZone: indiaTimezone,
+        const indianDate = new Intl.DateTimeFormat('en-US', {
+            timeZone: indianTimezone,
             month: 'long',
             day: 'numeric',
             year: 'numeric'
         }).format(now);
     
         // Update element
-        dateElement.innerText = indiaDate;
+        dateElement.innerText = indianDate;
     }
     
     // Get next draw time
     function getNextDrawTime() {
         const now = new Date();
-        const indiaNow = new Date(
-            now.toLocaleString('en-US', { timeZone: indiaTimezone })
+        const indianNow = new Date(
+            now.toLocaleString('en-US', { timeZone: indianTimezone })
         );
     
         for (let drawTime of drawTimes) {
-            const nextDraw = new Date(indiaNow);
+            const nextDraw = new Date(indianNow);
             nextDraw.setHours(drawTime.hour, drawTime.minute, 0, 0);
     
-            if (nextDraw > indiaNow) {
+            if (nextDraw > indianNow) {
                 return nextDraw;
             }
         }
     
         // If no future draws today, return the first draw time tomorrow
-        const nextDay = new Date(indiaNow);
+        const nextDay = new Date(indianNow);
         nextDay.setDate(nextDay.getDate() + 1);
         nextDay.setHours(drawTimes[0].hour, drawTimes[0].minute, 0, 0);
         return nextDay;
@@ -243,7 +238,8 @@ function display_youtube_live_broadcasts($atts = []) {
     setInterval(updateCountdown, 1000); // Update the countdown every second
     updateCountdown(); // Initial countdown update
     updateDate(); // Initial date update
-    </script>
+</script>
+
     
     <div id="yt-live-broadcast" style="display: none;">
         <?php echo fetch_youtube_live_broadcasts(); ?>

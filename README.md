@@ -54,3 +54,18 @@ AIzaSyDPr9Ni774jBR_-bOqIQp2Z_q2SwH3g1lU
 
 Target channel:
 UCX7bj5Fv2uBpAy1dRC1IhTw
+
+
+
+
+ <!-- TODO -->
+ Hint:
+ -- add these feature were the admin abel to create a layout
+ 
+
+
+
+
+ Ai Promt:
+
+make the existing layout as default layout and add a feature where the admin able to edit the layout and save the layout, take note the edditng of the layout to like the elementors way to drop and drag and the feature where the admin also able to eddit the, these customization can be save layout along the time setup
