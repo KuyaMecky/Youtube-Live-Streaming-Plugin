@@ -29,7 +29,7 @@ The YouTube Live Broadcasts plugin automatically fetches and displays the latest
     - Click on the channel name to go to the channel's homepage.
     - The Channel ID is the string of characters after `/channel/` in the URL. For example, in `https://www.youtube.com/channel/UC1234567890`, `UC1234567890` is the Channel ID.
     - Note: The Channel ID is not the same as the custom URL or username (e.g., `@DEARLOTTERIESLIVE`).
-    - You can use this to convert the channel tag into channel ID [UC Converter] `https://www.tunepocket.com/youtube-channel-id-finder/#channle-id-finder-form`
+    - You can use this to convert the channel tag into channel ID [UC Converter](https://www.tunepocket.com/youtube-channel-id-finder/#channle-id-finder-form).
 
 3. **Setup in Plugin**:
     - Navigate to `Settings` > `YouTube Live Broadcasts` in the WordPress admin dashboard.
@@ -47,26 +47,21 @@ To display the latest live broadcast from the specified YouTube channel, use the
 ## Shortcode
 - `[youtube_live]`: Embeds the latest live broadcast from the configured YouTube channel.
 
-## Example
-use the sample.php for this example
-my api Key:
-AIzaSyDPr9Ni774jBR_-bOqIQp2Z_q2SwH3g1lU
+## Embed Version
+To use the embed version of the YouTube Live Broadcasts plugin, follow these steps:
 
-Target channel:
-UCX7bj5Fv2uBpAy1dRC1IhTw
-UCpDJl2EmP7Oh90Vylx0dZtA
-UCX7bj5Fv2uBpAy1dRC1IhTw
+1. **Embed Code**: Obtain the embed code for the live broadcast from YouTube.
+    - Go to the live broadcast on YouTube.
+    - Click on the `Share` button below the video.
+    - Select `Embed` and copy the provided embed code.
 
+2. **Embed in WordPress**:
+    - Navigate to the post or page where you want to embed the live broadcast.
+    - Switch to the `Text` editor in the WordPress editor.
+    - Paste the embed code where you want the live broadcast to appear.
+    - Switch back to the `Visual` editor to see the embedded live broadcast.
 
+3. **Save Changes**: Update or publish the post or page to save your changes.
 
- <!-- TODO -->
- Hint:
- -- add these feature were the admin abel to create a layout
- 
+By following these steps, you can easily embed a YouTube live broadcast directly into your WordPress site without using the shortcode.
 
-
-
-
- Ai Promt:
-
-make the existing layout as default layout and add a feature where the admin able to edit the layout and save the layout, take note the edditng of the layout to like the elementors way to drop and drag and the feature where the admin also able to eddit the, these customization can be save layout along the time setup
