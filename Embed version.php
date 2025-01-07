@@ -54,8 +54,6 @@ function fetch_youtube_live_broadcasts() {
     return sprintf(
         '<div class="youtube-live-container">
             <iframe id="youtube-live-frame" 
-                    width="560" 
-                    height="315" 
                     src="%s" 
                     frameborder="0" 
                     allowfullscreen 
@@ -151,20 +149,20 @@ function display_youtube_live_broadcasts($atts = []) {
             margin: 20px auto;
             position: relative;
             width: 100%;
-            max-width: 560px;
-            min-height: 315px;
+            max-width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
             background-color: #f8f9fa;
             border-radius: 8px;
             overflow: hidden;
         }
         
         .youtube-live-container iframe {
-            width: 100%;
-            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
-            aspect-ratio: 16/9;
+            width: 100%;
+            height: 100%;
         }
 
         .clock {
